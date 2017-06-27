@@ -1,0 +1,14 @@
+---
+- name: Provisioning Pentaho
+  hosts: teste
+  remote_user: ansible
+  become: true
+
+  roles: 
+      - chpasswd
+     
+  
+  environment:
+     http_proxy: "http://server2.exemplo.com.br:8080" 
+     https_proxy: "http://server2.exemplo.com.br:8080"
+     no_proxy: "127.0.0.1, localhost" 

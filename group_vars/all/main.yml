@@ -1,0 +1,7 @@
+
+user:  teste
+user_root: teste2
+
+root_passwd: "{{ vault_root_passwd }}"
+unicred_passwd: "{{ vault_unicred_passwd }}"
+

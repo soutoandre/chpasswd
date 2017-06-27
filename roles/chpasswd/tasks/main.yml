@@ -1,0 +1,35 @@
+---
+
+- name: Greate Grupo Unicred
+  group: name={{ user }}  gid=1802 state=present
+ 
+  tags:
+    - chpasswd
+
+- name: Create user Unicred
+  user: name={{ user }}  shell=/bin/bash  uid=1802  group=unicred state=present
+
+  tags:
+    - chpasswd
+
+- name: Change password {{ user }}
+  shell: echo "{{ unicred_passwd }}"   | passwd --stdin  {{ user }}
+  tags:
+    - chpasswd
+
+- name: Change {{ user_root }} passwd
+  shell: echo "{{ root_passwd }}"   | passwd --stdin  {{ user_root }}
+  tags:
+    - chpasswd
+
+
+- name: Change visudo ansible
+  blockinfile:
+    destfile: /etc/sudoers
+    marker: "#<!-- {mark} ANSIBLE MANAGED BLOCK --> "
+    insertafter: "#includedir /etc/sudoers.d"
+    content: |
+
+     ansible ALL=(ALL)  NOPASSWD: ALL
+  tags:
+    - chpasswd  
